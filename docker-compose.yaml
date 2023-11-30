@@ -1,0 +1,13 @@
+version: "3.8"
+
+services:
+  gateway-link:
+    container_name: gateway-link
+    build: .
+    env_file:
+      - .env
+    ports:
+      - "${HTTP_PORT}:${HTTP_PORT}"
+    restart: unless-stopped
+
+    

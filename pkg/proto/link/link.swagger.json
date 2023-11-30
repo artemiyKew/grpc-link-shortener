@@ -1,0 +1,190 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "proto/link/link.proto",
+    "version": "version not set"
+  },
+  "tags": [
+    {
+      "name": "LinkShortener"
+    }
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "LinkShortener_GetLinksList",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/linkGetLinksListResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "tags": [
+          "LinkShortener"
+        ]
+      },
+      "post": {
+        "operationId": "LinkShortener_CreateShortLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/linkCreateShortLinkResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/linkCreateShortLinkRequest"
+            }
+          }
+        ],
+        "tags": [
+          "LinkShortener"
+        ]
+      }
+    },
+    "/{shortUrl}": {
+      "get": {
+        "operationId": "LinkShortener_GetShortLink",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/linkGetShortLinkResponse"
+            }
+          },
+          "default": {
+            "description": "An unexpected error response.",
+            "schema": {
+              "$ref": "#/definitions/rpcStatus"
+            }
+          }
+        },
+        "parameters": [
+          {
+            "name": "shortUrl",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "tags": [
+          "LinkShortener"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "linkCreateShortLinkRequest": {
+      "type": "object",
+      "properties": {
+        "fullUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "linkCreateShortLinkResponse": {
+      "type": "object",
+      "properties": {
+        "fullUrl": {
+          "type": "string"
+        },
+        "shortUrl": {
+          "type": "string"
+        },
+        "visitsCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "linkGetLinksListResponse": {
+      "type": "object",
+      "properties": {
+        "result": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/linkLink"
+          }
+        }
+      }
+    },
+    "linkGetShortLinkResponse": {
+      "type": "object",
+      "properties": {
+        "fullUrl": {
+          "type": "string"
+        }
+      }
+    },
+    "linkLink": {
+      "type": "object",
+      "properties": {
+        "fullUrl": {
+          "type": "string"
+        },
+        "shortUrl": {
+          "type": "string"
+        },
+        "visitsCount": {
+          "type": "integer",
+          "format": "int32"
+        }
+      }
+    },
+    "protobufAny": {
+      "type": "object",
+      "properties": {
+        "@type": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": {}
+    },
+    "rpcStatus": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "$ref": "#/definitions/protobufAny"
+          }
+        }
+      }
+    }
+  }
+}
