@@ -13,17 +13,17 @@
 
 **Скопируйте проект**
 ```bash
-  git clone https://github.com/artemiyKew/grpc-link-shortener.git
+git clone https://github.com/artemiyKew/grpc-link-shortener.git
 ```
 
 **Перейдите в каталог проекта**
 ```bash
-  cd grpc-link-shortener
+cd grpc-link-shortener
 ```
 
 **Запустите сервер**
 ```bash
-  make compose
+make compose
 ```
 
 ## Examples
@@ -68,7 +68,7 @@ curl http://0.0.0.0:2222/4dc3a76939
 Получение данных о сокращенных ссылках:
 
 ```bash
- curl -X GET \
+curl -X GET \
     http://0.0.0.0:2222/ \
     -H "Content-Type: application/json"
 ```
