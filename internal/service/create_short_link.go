@@ -4,8 +4,7 @@ import (
 	"context"
 	"crypto/sha256"
 	"encoding/hex"
-	"errors"
-	"net/http"
+	"net/url"
 	"strings"
 	"sync"
 
@@ -31,8 +30,8 @@ func (s *Service) CreateShortLink(ctx context.Context, req *gatewayapi.CreateSho
 		ShortURL:    generateShortLink(req.GetFullUrl(), 10),
 		VisitsCount: 0,
 	}
-
-	if err := s.isValidUrl(link.FullURL); err != nil {
+	_, err := url.ParseRequestURI(link.FullURL)
+	if err != nil {
 		return &gatewayapi.CreateShortLinkResponse{}, status.Error(codes.InvalidArgument, err.Error())
 	}
 
@@ -43,24 +42,6 @@ func (s *Service) CreateShortLink(ctx context.Context, req *gatewayapi.CreateSho
 		ShortUrl:    link.ShortURL,
 		VisitsCount: int32(link.VisitsCount),
 	}, nil
-}
-
-// TODO переделать на url и NewReqContext
-func (s *Service) isValidUrl(input string) error {
-	if !strings.HasPrefix(input, "https://") && !strings.HasPrefix(input, "http://") {
-		input = "https://" + input
-	}
-
-	response, err := http.Get(input)
-	if err != nil {
-		return err
-	}
-	defer response.Body.Close()
-
-	if response.StatusCode == http.StatusOK {
-		return nil
-	}
-	return errors.New("fail to connect, invalid url")
 }
 
 func generateShortLink(inputURL string, tokenLength int) string {

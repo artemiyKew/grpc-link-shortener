@@ -8,5 +8,6 @@ build:
 run: build
 	./gateway-service
 
-
+compose:
+	docker compose up
 .DEFAULT_GOAL = build

@@ -13,7 +13,6 @@ func (s *Service) GetShortLink(ctx context.Context, req *gatewayapi.GetShortLink
 	if err != nil {
 		return &gatewayapi.GetShortLinkResponse{}, status.Error(codes.InvalidArgument, err.Error())
 	}
-
 	return &gatewayapi.GetShortLinkResponse{
 		FullUrl: fullURL,
 	}, nil
